@@ -1,4 +1,4 @@
-export default function babelPluginPureToImpureComponent({types: t}) {
+export default function babelPluginTransformReactPureToComponent({types: t}) {
   return {
     visitor: {
       ImportDeclaration(path, state) {

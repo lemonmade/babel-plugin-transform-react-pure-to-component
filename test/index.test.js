@@ -1,7 +1,7 @@
 import {resolve} from 'path';
 import {transform} from 'babel-core';
 import {readFileSync} from 'fs-extra';
-import babelPluginPureToImpureComponent from '../src';
+import babelPluginTransformReactPureToComponent from '../src';
 
 function readFixture(fixture, inputOrOutput) {
   return readFileSync(resolve(__dirname, 'fixtures', `${fixture}.${inputOrOutput}.js`)).toString().trim();
@@ -13,7 +13,7 @@ function expectToTransform(fixture) {
 
   expect(transform(inputFixture, {
     babelrc: false,
-    plugins: [babelPluginPureToImpureComponent],
+    plugins: [babelPluginTransformReactPureToComponent],
   }).code.trim()).toBe(outputFixture);
 }
 
