@@ -21,9 +21,10 @@ export default function babelPluginTransformReactPureToComponent({types: t}) {
 
         if (superClass.isMemberExpression()) {
           const superClassObject = superClass.get('object');
+          
           if (
             !superClassObject.isIdentifier() ||
-            !path.scope.hasBinding(superClassObject.node.name) ||
+            path.scope.getBinding(superClassObject.node.name) == null ||
             !isReactImport(path.scope.getBinding(superClassObject.node.name).path) ||
             !superClass.get('property').isIdentifier({name: 'PureComponent'})
           ) { return; }
@@ -36,6 +37,11 @@ export default function babelPluginTransformReactPureToComponent({types: t}) {
 
           const superClassName = superClass.node.name;
           const importBinding = path.scope.getBinding(superClassName);
+
+          if (importBinding == null) {
+            return;
+          }
+
           const importPath = importBinding.path;
 
           if (
